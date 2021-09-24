@@ -1,0 +1,28 @@
+{
+  "name": "africas-talking-ussd",
+  "version": "1.0.0",
+  "description": "Ussd using Africas Talking node Api ",
+  "main": "index.js",
+  "scripts": {
+    "start": "nodemon server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/aknjoroge/Nodejs-USSD.git"
+  },
+  "keywords": [
+    "ussd",
+    "africastalking",
+    "api"
+  ],
+  "author": "Alexander Karanja",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/aknjoroge/Nodejs-USSD/issues"
+  },
+  "homepage": "https://github.com/aknjoroge/Nodejs-USSD#readme",
+  "dependencies": {
+    "express": "^4.17.1",
+    "nodemon": "^2.0.12"
+  }
+}
