@@ -3,7 +3,6 @@ let express = require("express");
 
 let routes = express.Router();
 
-routes.get("/", menucontroller.getMenu);
-
+routes.post("/", menucontroller.getMenu);
 
 module.exports = routes;

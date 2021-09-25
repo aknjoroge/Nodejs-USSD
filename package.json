@@ -4,7 +4,8 @@
   "description": "Ussd using Africas Talking node Api ",
   "main": "index.js",
   "scripts": {
-    "start": "nodemon server.js"
+    "start": "nodemon server.js",
+    "live": "ngrok http 2000"
   },
   "repository": {
     "type": "git",
@@ -23,6 +24,7 @@
   "homepage": "https://github.com/aknjoroge/Nodejs-USSD#readme",
   "dependencies": {
     "express": "^4.17.1",
+    "ngrok": "^4.2.2",
     "nodemon": "^2.0.12"
   }
 }
