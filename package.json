@@ -4,7 +4,7 @@
   "description": "Ussd using Africas Talking node Api ",
   "main": "index.js",
   "scripts": {
-    "start": "nodemon server.js",
+    "start": "node server.js",
     "live": "ngrok http 2000"
   },
   "repository": {
@@ -28,6 +28,6 @@
     "nodemon": "^2.0.12"
   },
   "engines": {
-    "node": ">=14.16.0."
+    "node": ">=14.16.0"
   }
 }
