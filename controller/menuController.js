@@ -8,11 +8,13 @@ console.log("userData", userData);
 exports.getMenu = function (req, res, next) {
   // Send the response back to the API
   res.set("Content-Type: text/plain");
-
   let user;
   let response = "CON nothing";
   const { sessionId, serviceCode, phoneNumber, text } = req.body;
-  console.log(req.body);
+  console.log("req.body", req.body);
+
+  let level = text.split("*");
+  console.log("level.length", level.length);
 
   userData.forEach(function (element, index) {
     if (element.phone == phoneNumber) {
@@ -48,12 +50,10 @@ exports.getMenu = function (req, res, next) {
     2. Change Number
     `;
   } else if (text == "1*1") {
-    
     response = `CON Enter Your Name
-    
+
     `;
     // response = `END You have registered successfully, Dial again *384*8355# to get started.`;
-
   } else if (text == "1*1") {
     // This is a second level response where the user selected 1 in the first instance
     const accountNumber = "ACC100101";
