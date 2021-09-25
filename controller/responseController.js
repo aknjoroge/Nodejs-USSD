@@ -1,3 +1,5 @@
+let userController = require("./userController");
+
 //=====Global set data
 let phoneNumber;
 let textArray;
@@ -10,7 +12,9 @@ exports.globalData = function (phone, array = "") {
   textArray = array;
 };
 
+//=========USER REGISTRARTION===========
 exports.resgisterScreen = async function (req, res, next) {
+  res.set("Content-Type: text/plain");
   response = `CON TechKey Cybernetics USSD Service \n Please register to continue  
     1. Register
     2. Exit
@@ -18,6 +22,7 @@ exports.resgisterScreen = async function (req, res, next) {
   res.send(response);
 };
 exports.resgisterScreenStage1 = function (req, res, next) {
+  res.set("Content-Type: text/plain");
   response = `CON Please Confirm this is your Number
     ${phoneNumber} 
     1. Confirmed
@@ -26,6 +31,7 @@ exports.resgisterScreenStage1 = function (req, res, next) {
   res.send(response);
 };
 exports.resgisterScreenStage2 = function (req, res, next) {
+  res.set("Content-Type: text/plain");
   if (textArray[1] == 2) {
     response = `CON Enter a new Number : 07........ `;
   }
@@ -35,6 +41,7 @@ exports.resgisterScreenStage2 = function (req, res, next) {
   res.send(response);
 };
 exports.resgisterScreenStage3 = function (req, res, next) {
+  res.set("Content-Type: text/plain");
   if (textArray[1] == 2) {
     response = `CON Phone number updated to ${textArray[2]}
         continue with registration?
@@ -47,8 +54,15 @@ exports.resgisterScreenStage3 = function (req, res, next) {
   res.send(response);
 };
 exports.resgisterScreenStage4 = function (req, res, next) {
+  res.set("Content-Type: text/plain");
   if (textArray[1] == 2) {
-    response = `CON Enter Your Full Name `;
+    console.log("textArray[3]", textArray[3]);
+    if (textArray[3] == 2) {
+      response = `END Registration Cancelled `;
+    }
+    if (textArray[3] == 1) {
+      response = `CON Enter Your Full Name `;
+    }
   }
   if (textArray[1] == 1) {
     response = `CON Set a password`;
@@ -57,6 +71,7 @@ exports.resgisterScreenStage4 = function (req, res, next) {
   res.send(response);
 };
 exports.resgisterScreenStage5 = function (req, res, next) {
+  res.set("Content-Type: text/plain");
   if (textArray[1] == 2) {
     response = `CON Enter your Id number`;
   }
@@ -68,15 +83,30 @@ exports.resgisterScreenStage5 = function (req, res, next) {
   res.send(response);
 };
 exports.resgisterScreenStage6 = function (req, res, next) {
+  res.set("Content-Type: text/plain");
   if (textArray[1] == 2) {
     response = `CON  Set a password`;
   }
   if (textArray[1] == 1) {
-    response = `END you are not registered`;
+    if (textArray[4] != textArray[5]) {
+      response = `END  Your Passwords Do Not Match`;
+      console.log("textArray pass here", textArray);
+    } else if (textArray[4] == textArray[5]) {
+      console.log("textArray here", textArray);
+      userController.createUser(
+        textArray[2],
+        textArray[3],
+        phoneNumber,
+        textArray[4]
+      );
+
+      response = `END  You have been registered`;
+    }
   }
   res.send(response);
 };
 exports.resgisterScreenStage7 = function (req, res, next) {
+  res.set("Content-Type: text/plain");
   if (textArray[1] == 2) {
     response = `CON  Confirm the password`;
   }
@@ -86,6 +116,7 @@ exports.resgisterScreenStage7 = function (req, res, next) {
   res.send(response);
 };
 exports.resgisterScreenStage8 = function (req, res, next) {
+  res.set("Content-Type: text/plain");
   if (textArray[7] != textArray[6]) {
     response = `CON Your Passwords Do Not Match
         1. Retry`;
@@ -96,19 +127,15 @@ exports.resgisterScreenStage8 = function (req, res, next) {
         userNewPhone = textArray[2];
       }
 
-      let newUser = {
-        id: 0.9201050781107354,
-        name: textArray[4],
-        id_no: textArray[5],
-        phone: userNewPhone || phoneNumber,
-        password: textArray[6],
-        active: true,
-      };
+      console.log("textArray", textArray);
+      let controllerPhone = userNewPhone ? userNewPhone : phoneNumber;
+      userController.createUser(
+        textArray[4],
+        textArray[5],
+        controllerPhone,
+        textArray[6]
+      );
 
-      console.log(newUser);
-      // let newUserString = JSON.stringify(newUser);
-      // const newData = userData + `${newUser}`;
-      // fs.writeFileSync("./../dev-data/data/users.json", newUserString);
       response = `END You have been registered`;
     }
     if (textArray[1] == 1) {
@@ -119,6 +146,7 @@ exports.resgisterScreenStage8 = function (req, res, next) {
 };
 
 exports.resgisterScreenStage9 = function (req, res, next) {
+  res.set("Content-Type: text/plain");
   if (textArray[7] != textArray[6] && textArray[1] == 2) {
     response = `CON Enter a password`;
   } else {
@@ -127,6 +155,7 @@ exports.resgisterScreenStage9 = function (req, res, next) {
   res.send(response);
 };
 exports.resgisterScreenStage10 = function (req, res, next) {
+  res.set("Content-Type: text/plain");
   if (textArray[7] != textArray[6] && textArray[1] == 2) {
     response = `CON Confirm the password`;
   } else {
@@ -135,22 +164,21 @@ exports.resgisterScreenStage10 = function (req, res, next) {
   res.send(response);
 };
 exports.resgisterScreenStage11 = function (req, res, next) {
+  res.set("Content-Type: text/plain");
   if (textArray[7] != textArray[6] && textArray[1] == 2) {
     if (textArray[10] == textArray[9]) {
       //encrypt password
       if (textArray[1] == 2) {
         userNewPhone = textArray[2];
       }
-      let newUser = {
-        id: 0.9201050781107354,
-        name: textArray[4],
-        id_no: textArray[5],
-        phone: userNewPhone || phoneNumber,
-        password: textArray[9],
-        active: true,
-      };
 
-      console.log(newUser);
+      let controllerPhone = userNewPhone ? userNewPhone : phoneNumber;
+      userController.createUser(
+        textArray[4],
+        textArray[5],
+        controllerPhone,
+        textArray[9]
+      );
 
       response = `END  You have been registered `;
     } else {

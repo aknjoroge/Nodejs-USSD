@@ -1,11 +1,26 @@
 [
   {
-    "id": 0.9201050781107354,
-    "name": "aq",
-    "id_no": "00000000",
-    "email": "alex@techkey.co.ke",
-    "phone": "0700000000",
-    "password": "xxxxxxxxxxxxxxxxxx",
+    "id": "1632570817802",
+    "name": "karanja",
+    "id_no": "377",
+    "phone": "076666",
+    "password": "67",
+    "active": true
+  },
+  {
+    "id": "1632570895921",
+    "name": "njoro",
+    "id_no": "377",
+    "phone": "076666",
+    "password": "55",
+    "active": true
+  },
+  {
+    "id": "1632571003868",
+    "name": "karanja mj",
+    "id_no": "909",
+    "phone": "+2547106644187",
+    "password": "01",
     "active": true
   }
 ]

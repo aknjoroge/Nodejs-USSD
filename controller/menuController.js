@@ -1,34 +1,27 @@
-let fs = require("fs");
-let users = fs.readFileSync(`${__dirname}/../dev-data/data/users.json`);
-let userData = JSON.parse(users);
-
 let responseController = require("./responseController");
+let userController = require("./userController");
 
 exports.getMenu = function (req, res, next) {
   // Send the response back to the API
-  res.set("Content-Type: text/plain");
 
   //========= VARIABLES===========
   let level = 0;
   let textArray;
   let user;
+  //================== data from Africastalking
 
-  //===================
-  //data from Africastalking
   const { sessionId, serviceCode, phoneNumber, text } = req.body;
 
   if (text) {
     textArray = text.split("*");
     level = textArray.length;
   }
-  userData.forEach(function (element, index) {
-    if (element.phone == phoneNumber) {
-      user = element;
-    }
-  });
-
+  //====Passing Global Data
+  userController.globalData(phoneNumber);
   responseController.globalData(phoneNumber, textArray);
+
   //=============RegistrationProcess===================
+  user = userController.getuser();
   if (level == 0 && !user) {
     responseController.resgisterScreen(req, res, next);
   } else if (level == 1 && !user) {
@@ -54,4 +47,11 @@ exports.getMenu = function (req, res, next) {
   } else if (level == 11 && !user) {
     responseController.resgisterScreenStage11(req, res, next);
   }
+
+  if (user) {
+    console.log("Reg user", user);
+    res.send("You are registered");
+  }
+
+  //End of menu Function
 };
