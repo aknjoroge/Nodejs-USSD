@@ -21,10 +21,12 @@ exports.getMenu = function (req, res, next) {
   });
 
   if (text == "" && !user) {
-    response = `CON TechKey Cybernetics USSD Service \n Please register to continue  \n
+    response = `CON TechKey Cybernetics USSD Service \n Please register to continue  
     1. Register
-    2. Exit`;
-  } else if (text == "1") {
+    2. Exit
+    \n
+    &copy; TechKey`;
+  } else if (text == "1" && !user) {
     /**
      *  $response  = "CON Welcome $name, to TechKey-Kenya USSD service\n";
         $response .= "1. My Account \n";
@@ -45,10 +47,13 @@ exports.getMenu = function (req, res, next) {
     1. Confirmed
     2. Change Number
     `;
-  } else if (text == "2") {
-    // Business logic for first level response
-    // This is a terminal request. Note how we start the response with END
-    response = `END Your phone number is ${phoneNumber}`;
+  } else if (text == "1*1") {
+    
+    response = `CON Enter Your Name
+    
+    `;
+    // response = `END You have registered successfully, Dial again *384*8355# to get started.`;
+
   } else if (text == "1*1") {
     // This is a second level response where the user selected 1 in the first instance
     const accountNumber = "ACC100101";
