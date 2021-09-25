@@ -18,9 +18,9 @@ exports.getMenu = function (req, res, next) {
   }
   //====Passing Global Data
   userController.globalData(phoneNumber);
-  responseController.globalData(phoneNumber, textArray);
+  responseController.globalData(phoneNumber, textArray, text);
 
-  //=============RegistrationProcess===================
+  //=============Registration Process===================
   user = userController.getuser();
   if (level == 0 && !user) {
     responseController.resgisterScreen(req, res, next);
@@ -48,9 +48,50 @@ exports.getMenu = function (req, res, next) {
     responseController.resgisterScreenStage11(req, res, next);
   }
 
-  if (user) {
-    console.log("Reg user", user);
-    res.send("You are registered");
+  //==================User is Registered MAIN APP=======================
+  if (user && level == 0) {
+    // no text set - home meny
+    responseController.welcomeScreen(req, res, next, user);
+  } else if (user && level == 1) {
+    // One level in,
+    if (textArray[0] == 1) {
+      responseController.accountMenu(req, res, next, user);
+    } else if (textArray[0] == 2) {
+      responseController.sendMoney(req, res, next, user);
+    } else if (textArray[0] == 3) {
+      responseController.myProjects(req, res, next, user);
+    } else if (textArray[0] == 4) {
+      responseController.development(req, res, next, user);
+    } else if (textArray[0] == 5) {
+      responseController.assistance(req, res, next, user);
+    } else {
+      res.send("invalid input");
+    }
+    // End of one level in,
+  } else if (user && level == 2) {
+    // second level in
+    if (textArray[0] == 1) {
+      if (textArray[1] == 1) {
+        responseController.userBalance(req, res, next, user);
+      } else if (textArray[1] == 2) {
+        responseController.userDetails(req, res, next, user);
+      }
+    } else if (textArray[0] == 2) {
+      responseController.enterSendAmount(req, res, next, user);
+    } else {
+      res.send("Not set");
+    }
+    // end of second level in
+  } else if (user && level == 3) {
+    //third level in
+    if (textArray[0] == 2) {
+      responseController.confirmSendingMoney(req, res, next, user);
+    }
+    //End of third level in
+  } else {
+    console.log("level", level);
+    console.log("textArrauy", textArray);
+    res.send("inner level");
   }
 
   //End of menu Function

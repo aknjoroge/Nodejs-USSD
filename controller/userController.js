@@ -12,6 +12,25 @@ exports.globalData = function (phone) {
 exports.getuser = function () {
   return user;
 };
+exports.checkIfUserIsRegistered = function (phone) {
+  let present = false;
+  userData.forEach(function (element, index) {
+    if (element.phone == phone) {
+      present = true;
+    }
+  });
+  return present;
+};
+
+exports.getUserByPhone = function (phone) {
+  let presentuser;
+  userData.forEach(function (element, index) {
+    if (element.phone == phone) {
+      presentuser = element;
+    }
+  });
+  return presentuser;
+};
 
 exports.createUser = function (name, idno, phone, password) {
   let id = Date.now().toString();

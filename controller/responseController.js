@@ -18,7 +18,7 @@ exports.resgisterScreen = async function (req, res, next) {
   response = `CON TechKey Cybernetics USSD Service \n Please register to continue  
     1. Register
     2. Exit
-    &copy; TechKey`;
+    &copy; TechKey Cybernetics`;
   res.send(response);
 };
 exports.resgisterScreenStage1 = function (req, res, next) {
@@ -187,5 +187,96 @@ exports.resgisterScreenStage11 = function (req, res, next) {
   } else {
     response = `END you are not registered`;
   }
+  res.send(response);
+};
+
+exports.welcomeScreen = function (req, res, next, user) {
+  res.set("Content-Type: text/plain");
+  response = `CON Hallo ${user.name}.
+   Welcome To Techkey Cybernetics USSD Application
+   Select A Service Below
+   1. My Account
+   2. Send money
+   3. My Projects
+   4. Development Services
+   5. Client Assistance
+   &copy; TechKey Cybernetics
+    `;
+  res.send(response);
+};
+/** Backup
+ * exports.assistance = function (req, res, next, user) {
+  response = `Client Assistance`;
+  res.send(response);
+};
+ */
+exports.accountMenu = function (req, res, next, user) {
+  response = ` CON Account Menu
+  1. Check Balance
+  2. My Details`;
+  res.send(response);
+};
+exports.sendMoney = function (req, res, next, user) {
+  response = `CON Send Money To A Registered User.
+  Enter phone number`;
+  res.send(response);
+};
+
+exports.myProjects = function (req, res, next, user) {
+  response = `My projects`;
+  res.send(response);
+};
+exports.development = function (req, res, next, user) {
+  response = `Development Services`;
+  res.send(response);
+};
+exports.assistance = function (req, res, next, user) {
+  response = `Client Assistance`;
+  res.send(response);
+};
+exports.userBalance = function (req, res, next, user) {
+  let now = Date.now();
+  let options = {
+    weekday: "long",
+    month: "long",
+    day: "numeric",
+    year: "numeric",
+  };
+  let formatedDate = new Intl.DateTimeFormat("en-US", options).format(now);
+  response = `END Account Balance      
+  Your Account Balance was KSh 18,000 on ${formatedDate}.
+  A confirmation SMS has been sent To you.`;
+  res.send(response);
+};
+
+exports.userDetails = function (req, res, next, user) {
+  response = `END Account Details
+  Name : ${user.name}
+  Phone : ${user.phone}
+  ID no : ${user.id_no}`;
+  res.send(response);
+};
+
+exports.enterSendAmount = function (req, res, next, user) {
+  response = `END Enter Amount To Send
+  `;
+  res.send(response);
+};
+exports.confirmSendingMoney = function (req, res, next, user) {
+  console.log(textArray);
+
+  let isRegistered = userController.checkIfUserIsRegistered(textArray[1]);
+  if (!isRegistered) {
+    response = `END The phone number ${textArray[1]}, does not belong to any registerd user of Techkey Cybernetics
+    You can only send money to registered users.
+    For testing purposes use the numbers provided below 
+    1. 0710664418 - Techkey Developer
+    2. 0797965680 - Techkey project manger`;
+  } else {
+    let getRecipient = userController.getUserByPhone(textArray[1]);
+    response = `Are you sure you want to transfer money to ${getRecipient.name}
+    `;
+  }
+
   res.send(response);
 };

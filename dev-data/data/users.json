@@ -3,6 +3,7 @@
     "id": "1632570817802",
     "name": "karanja",
     "id_no": "377",
+    "balance": 500,
     "phone": "076666",
     "password": "67",
     "active": true
@@ -11,6 +12,7 @@
     "id": "1632570895921",
     "name": "njoro",
     "id_no": "377",
+    "balance": 500,
     "phone": "076666",
     "password": "55",
     "active": true
@@ -18,6 +20,7 @@
   {
     "id": "1632571003868",
     "name": "karanja mj",
+    "balance": 500,
     "id_no": "909",
     "phone": "+2547106644187",
     "password": "01",
