@@ -9,19 +9,42 @@ exports.getMenu = function (req, res, next) {
   // Send the response back to the API
   res.set("Content-Type: text/plain");
 
+  let user;
+  let response = "CON nothing";
   const { sessionId, serviceCode, phoneNumber, text } = req.body;
   console.log(req.body);
-  let response = "CON hi";
 
-  if (text == "") {
-    // This is the first request. Note how we start the response with CON
-    response = `CON What would you like to check
-    1. My account
-    2. My phone number`;
+  userData.forEach(function (element, index) {
+    if (element.phone == phoneNumber) {
+      user = element;
+    }
+  });
+
+  if (text == "" && !user) {
+    response = `CON TechKey Cybernetics USSD Service \n Please register to continue  \n
+    1. Register
+    2. Exit`;
   } else if (text == "1") {
+    /**
+     *  $response  = "CON Welcome $name, to TechKey-Kenya USSD service\n";
+        $response .= "1. My Account \n";
+        $response .= "2. Send Money \n";
+        $response .= "3. Account Balance\n";
+        $response .= "4. News Letters \n";
+        $response .= "5. Blogging Services \n";
+        $response .= "6. Development Services \n";
+        $response .= "7. Client Assistance \n";
+        $response .= "8. Daily Updates \n";
+ 
+        $response .= " &copy; TechKey";
+     */
+
     // Business logic for first level response
-    response = `CON Choose account information you want to view
-    1. Account number`;
+    response = `CON Please Confirm this is your Number
+    ${phoneNumber} 
+    1. Confirmed
+    2. Change Number
+    `;
   } else if (text == "2") {
     // Business logic for first level response
     // This is a terminal request. Note how we start the response with END
