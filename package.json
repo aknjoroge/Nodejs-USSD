@@ -24,7 +24,6 @@
   "homepage": "https://github.com/aknjoroge/Nodejs-USSD#readme",
   "dependencies": {
     "express": "^4.17.1",
-    "ngrok": "^4.2.2",
     "nodemon": "^2.0.12"
   },
   "engines": {
