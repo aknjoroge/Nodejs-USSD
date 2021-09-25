@@ -4,8 +4,7 @@
   "description": "Ussd using Africas Talking node Api ",
   "main": "index.js",
   "scripts": {
-    "start": "node server.js",
-    "live": "ngrok http 2000"
+    "start": "nodemon server.js"
   },
   "repository": {
     "type": "git",
