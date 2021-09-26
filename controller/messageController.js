@@ -12,14 +12,15 @@ exports.sendMessage = function (req, res, next, user, message) {
   const options = {
     to: [`${user.phone}`],
     message,
-    from: "Techkey Cybernetics",
+    from: "Techkey",
   };
 
   // Send message and capture the response or error
   sms
     .send(options)
     .then((response) => {
-      res.send("Message has been sent");
+      console.log(response);
+      console.log("message sent");
     })
     .catch((error) => {
       console.log(error);

@@ -253,6 +253,7 @@ exports.userBalance = async function (req, res, next, user) {
     textArray[2],
     user.password
   );
+  let formatedDate;
 
   if (!correctPassword) {
     response = "END You Entered The Wrong Pin, Please Try Again";
@@ -264,7 +265,7 @@ exports.userBalance = async function (req, res, next, user) {
       day: "numeric",
       year: "numeric",
     };
-    let formatedDate = new Intl.DateTimeFormat("en-US", options).format(now);
+    formatedDate = new Intl.DateTimeFormat("en-US", options).format(now);
     response = `END Account Balance      
   Your Account Balance was KSh ${user.balance} on ${formatedDate}.
   A confirmation SMS has been sent To you.`;
@@ -278,7 +279,9 @@ exports.userBalance = async function (req, res, next, user) {
       user,
       `Your Account Balance was KSh ${user.balance} on ${formatedDate}`
     );
-  } catch (error) {}
+  } catch (error) {
+    console.log(error);
+  }
 
   res.send(response);
 };
