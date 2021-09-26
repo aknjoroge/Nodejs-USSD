@@ -87,3 +87,38 @@ exports.updateRecords = async function (data) {
     }
   );
 };
+exports.createProject = async function (name, phone, type) {
+  let newPoject = {
+    name,
+    phone,
+    type,
+  };
+
+  let projects = fs.readFileSync(`${__dirname}/../dev-data/data/projects.json`);
+  let projectsData = JSON.parse(projects);
+  projectsData.push(newPoject);
+
+  fs.writeFile(
+    `${__dirname}/../dev-data/data/projects.json`,
+    JSON.stringify(projectsData),
+    function (err) {
+      if (!err) {
+        console.log("Data saved");
+      } else {
+        console.log(err);
+      }
+    }
+  );
+};
+exports.getProjects = async function (phone) {
+  let userProjects = [];
+
+  let projects = fs.readFileSync(`${__dirname}/../dev-data/data/projects.json`);
+  let projectsData = JSON.parse(projects);
+  projectsData.forEach(function (element, index) {
+    if (element.phone == phone) {
+      userProjects.push(element);
+    }
+  });
+  return userProjects;
+};

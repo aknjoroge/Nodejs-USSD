@@ -78,6 +78,16 @@ exports.getMenu = function (req, res, next) {
       }
     } else if (textArray[0] == 2) {
       responseController.enterSendAmount(req, res, next, user);
+    } else if (textArray[0] == 4) {
+      if (textArray[1] == 1) {
+        responseController.webDevelopment(req, res, next, user);
+      } else if (textArray[1] == 2) {
+        responseController.appDevelopment(req, res, next, user);
+      } else if (textArray[1] == 3) {
+        responseController.apiDevelopment(req, res, next, user);
+      } else {
+        res.send("END invalid input");
+      }
     } else {
       res.send("Not set");
     }
@@ -87,8 +97,18 @@ exports.getMenu = function (req, res, next) {
     if (textArray[0] == 2) {
       responseController.confirmSendingMoney(req, res, next, user);
     }
-    if (textArray[1] == 1) {
+    if (textArray[0] == 1 && textArray[1] == 1) {
       responseController.userBalance(req, res, next, user);
+    } else if (textArray[0] == 4) {
+      if (textArray[1] == 1) {
+        responseController.addAWebProject(req, res, next, user);
+      } else if (textArray[1] == 2) {
+        responseController.addAnAppProject(req, res, next, user);
+      } else if (textArray[1] == 3) {
+        responseController.addAnApiProject(req, res, next, user);
+      } else {
+        res.send("END invalid input");
+      }
     }
     //End of third level in
   } else if (user && level == 4) {

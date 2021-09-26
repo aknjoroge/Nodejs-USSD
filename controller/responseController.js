@@ -219,16 +219,32 @@ exports.sendMoney = function (req, res, next, user) {
   res.send(response);
 };
 
-exports.myProjects = function (req, res, next, user) {
-  response = `My projects`;
+exports.myProjects = async function (req, res, next, user) {
+  let personalProjects = await userController.getProjects(user.phone);
+  if (personalProjects.length == 0) {
+    response = `END you currently dont have any projects with us. Order a service to get started.`;
+  } else {
+    let myProject = "";
+    personalProjects.forEach(function (element, index) {
+      myProject += element.name + "\n ";
+    });
+    response = `you currently have ${personalProjects.length} projects
+    ${myProject}`;
+  }
   res.send(response);
 };
 exports.development = function (req, res, next, user) {
-  response = `Development Services`;
+  response = `CON Start a new project.
+  1. Web development
+  2. App development
+  3. API `;
   res.send(response);
 };
 exports.assistance = function (req, res, next, user) {
-  response = `Client Assistance`;
+  response = `Contact us
+  If you need more assistance reach us through
+  1. +254710664418
+  2. info@techkey.co.ke`;
   res.send(response);
 };
 exports.userBalance = function (req, res, next, user) {
@@ -310,6 +326,58 @@ exports.sendMoneyOperation = function (req, res, next, user) {
   } else {
     response = `END Insufficient balance, cannot send ${textArray[2]} KSh. Current balance is ${user.balance} KSh.
     Transaction cost is ${transactioncost} KSh. `;
+  }
+
+  res.send(response);
+};
+
+exports.webDevelopment = function (req, res, next, user) {
+  response = `CON Web Development
+  We develop both static and dynamic website using different tools. We use programming langauges such as
+  React, scss, Javascript, Php or wordpress and more. 
+  We also provides fast and secure hosting servcies to global businesses.
+  To apply for this service type in a preferred Domain name for your web application
+  `;
+  res.send(response);
+};
+exports.appDevelopment = function (req, res, next, user) {
+  response = `CON write a small description of the type of application you want.
+  `;
+  res.send(response);
+};
+exports.apiDevelopment = function (req, res, next, user) {
+  response = `CON Request for a REST API design.
+  1. Request
+  2. Cancel
+  `;
+  res.send(response);
+};
+
+exports.addAWebProject = function (req, res, next, user) {
+  userController.createProject(textArray[2], user.phone, "WEB");
+
+  response = `END we have received your web development application for a project called ${textArray[2]}
+  We will contact you soon for more details.
+  `;
+  res.send(response);
+};
+exports.addAnAppProject = function (req, res, next, user) {
+  userController.createProject("Application", user.phone, "App");
+
+  response = `END we have received your Application development request
+  We will contact you soon for more details.
+  `;
+  res.send(response);
+};
+exports.addAnApiProject = function (req, res, next, user) {
+  if (textArray[2] == 1) {
+    userController.createProject("REST API", user.phone, "API");
+
+    response = `END we have received your API development request
+    We will contact you soon for more details.
+    `;
+  } else {
+    response = "END Project submittion cancelled";
   }
 
   res.send(response);
