@@ -11,6 +11,7 @@ const saltRounds = 2;
 //////////////////////////////////
 
 exports.globalData = function (phone) {
+  user = null;
   userData.forEach(function (element, index) {
     if (element.phone == phone) {
       user = element;

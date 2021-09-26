@@ -21,6 +21,9 @@ exports.getMenu = function (req, res, next) {
     textArray = text.split("*");
     level = textArray.length;
   }
+
+  console.log(phoneNumber);
+
   //====Passing Global Data
   userController.globalData(phoneNumber);
   responseController.globalData(phoneNumber, textArray, text);
