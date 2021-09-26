@@ -247,8 +247,13 @@ exports.assistance = function (req, res, next, user) {
   2. info@techkey.co.ke`;
   res.send(response);
 };
-exports.userBalance = function (req, res, next, user) {
-  if (textArray[2] != user.password) {
+exports.userBalance = async function (req, res, next, user) {
+  let correctPassword = await userController.validatePassword(
+    textArray[2],
+    user.password
+  );
+
+  if (!correctPassword) {
     response = "END You Entered The Wrong Pin, Please Try Again";
   } else {
     let now = Date.now();

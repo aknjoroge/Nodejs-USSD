@@ -1,38 +1,11 @@
 [
   {
-    "id": "1632570817802",
-    "name": "karanja",
-    "id_no": "377",
-    "balance": 500,
-    "phone": "076666",
-    "password": "67",
-    "active": true
-  },
-  {
-    "id": "1632570895921",
-    "name": "njoro",
-    "id_no": "377",
-    "balance": 500,
-    "phone": "076666",
-    "password": "55",
-    "active": true
-  },
-  {
-    "id": "1632571003868",
-    "name": "karanja mj",
-    "balance": 396,
-    "id_no": "909",
+    "id": "1632655757712",
+    "name": "alexander",
+    "id_no": "566",
     "phone": "+2547106644187",
-    "password": "01",
-    "active": true
-  },
-  {
-    "id": "1632571003868",
-    "name": "alexander kn",
-    "balance": 577,
-    "id_no": "908",
-    "phone": "0710664418",
-    "password": "11",
+    "password": "$2b$04$f0XU.unp8.eooUAjVvGoO.ISI3F8/KTRsc09Z83td2Pym9tA2FW2C",
+    "balance": 0,
     "active": true
   }
 ]

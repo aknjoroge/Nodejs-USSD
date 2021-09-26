@@ -10,7 +10,12 @@ exports.getMenu = function (req, res, next) {
   let user;
   //================== data from Africastalking
 
-  const { sessionId, serviceCode, phoneNumber, text } = req.body;
+  let { sessionId, serviceCode, phoneNumber, text } = req.body;
+
+  if (phoneNumber.startsWith("07")) {
+    let number = phoneNumber.slice(1);
+    phoneNumber = `+254${number}`;
+  }
 
   if (text) {
     textArray = text.split("*");
@@ -22,6 +27,7 @@ exports.getMenu = function (req, res, next) {
 
   //=============Registration Process===================
   user = userController.getuser();
+
   if (level == 0 && !user) {
     responseController.resgisterScreen(req, res, next);
   } else if (level == 1 && !user) {
@@ -121,10 +127,6 @@ exports.getMenu = function (req, res, next) {
       }
     }
     //End of third level in
-  } else {
-    console.log("level", level);
-    console.log("textArrauy", textArray);
-    res.send("inner level");
   }
 
   //End of menu Function

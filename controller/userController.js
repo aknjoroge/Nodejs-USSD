@@ -2,6 +2,14 @@ let fs = require("fs");
 let users = fs.readFileSync(`${__dirname}/../dev-data/data/users.json`);
 let userData = JSON.parse(users);
 let user;
+
+///////////////////////////////////
+
+const bcrypt = require("bcrypt");
+const saltRounds = 2;
+
+//////////////////////////////////
+
 exports.globalData = function (phone) {
   userData.forEach(function (element, index) {
     if (element.phone == phone) {
@@ -32,14 +40,27 @@ exports.getUserByPhone = function (phone) {
   return presentuser;
 };
 
-exports.createUser = function (name, idno, phone, password) {
+exports.createUser = async function (name, idno, phone, password) {
   let id = Date.now().toString();
+
+  let encrypedPass;
+
+  await bcrypt.hash(password, saltRounds).then(function (hash) {
+    encrypedPass = hash;
+  });
+
+  if (phone.startsWith("07")) {
+    let number = phone.slice(1);
+    phone = `+254${number}`;
+  }
+
   let newUser = {
     id,
     name: name,
     id_no: idno,
     phone: phone,
-    password: password,
+    password: encrypedPass,
+    balance: 0,
     active: true,
   };
 
@@ -121,4 +142,13 @@ exports.getProjects = async function (phone) {
     }
   });
   return userProjects;
+};
+exports.validatePassword = async function (password, hashedPassword) {
+  let validated = false;
+  await bcrypt.compare(password, hashedPassword).then(function (result) {
+    if (result) {
+      validated = true;
+    }
+  });
+  return validated;
 };
