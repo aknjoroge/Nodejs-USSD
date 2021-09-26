@@ -269,18 +269,17 @@ exports.userBalance = async function (req, res, next, user) {
     response = `END Account Balance      
   Your Account Balance was KSh ${user.balance} on ${formatedDate}.
   A confirmation SMS has been sent To you.`;
-  }
-
-  try {
-    messageController.sendMessage(
-      req,
-      res,
-      next,
-      user,
-      `Your Account Balance was KSh ${user.balance} on ${formatedDate}`
-    );
-  } catch (error) {
-    console.log(error);
+    try {
+      messageController.sendMessage(
+        req,
+        res,
+        next,
+        user,
+        `Your Account Balance was KSh ${user.balance} on ${formatedDate}`
+      );
+    } catch (error) {
+      console.log(error);
+    }
   }
 
   res.send(response);
