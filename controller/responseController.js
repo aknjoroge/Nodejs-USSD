@@ -3,6 +3,7 @@ let userController = require("./userController");
 //=====Global set data
 let phoneNumber;
 let textArray;
+let transactioncost = 27;
 //======localls=======
 let userNewPhone;
 let response = "END failed customly";
@@ -56,7 +57,6 @@ exports.resgisterScreenStage3 = function (req, res, next) {
 exports.resgisterScreenStage4 = function (req, res, next) {
   res.set("Content-Type: text/plain");
   if (textArray[1] == 2) {
-    console.log("textArray[3]", textArray[3]);
     if (textArray[3] == 2) {
       response = `END Registration Cancelled `;
     }
@@ -90,9 +90,7 @@ exports.resgisterScreenStage6 = function (req, res, next) {
   if (textArray[1] == 1) {
     if (textArray[4] != textArray[5]) {
       response = `END  Your Passwords Do Not Match`;
-      console.log("textArray pass here", textArray);
     } else if (textArray[4] == textArray[5]) {
-      console.log("textArray here", textArray);
       userController.createUser(
         textArray[2],
         textArray[3],
@@ -127,7 +125,6 @@ exports.resgisterScreenStage8 = function (req, res, next) {
         userNewPhone = textArray[2];
       }
 
-      console.log("textArray", textArray);
       let controllerPhone = userNewPhone ? userNewPhone : phoneNumber;
       userController.createUser(
         textArray[4],
@@ -235,17 +232,26 @@ exports.assistance = function (req, res, next, user) {
   res.send(response);
 };
 exports.userBalance = function (req, res, next, user) {
-  let now = Date.now();
-  let options = {
-    weekday: "long",
-    month: "long",
-    day: "numeric",
-    year: "numeric",
-  };
-  let formatedDate = new Intl.DateTimeFormat("en-US", options).format(now);
-  response = `END Account Balance      
-  Your Account Balance was KSh 18,000 on ${formatedDate}.
+  if (textArray[2] != user.password) {
+    response = "END You Entered The Wrong Pin, Please Try Again";
+  } else {
+    let now = Date.now();
+    let options = {
+      weekday: "long",
+      month: "long",
+      day: "numeric",
+      year: "numeric",
+    };
+    let formatedDate = new Intl.DateTimeFormat("en-US", options).format(now);
+    response = `END Account Balance      
+  Your Account Balance was KSh ${user.balance} on ${formatedDate}.
   A confirmation SMS has been sent To you.`;
+  }
+  res.send(response);
+};
+exports.confirmPin = function (req, res, next, user) {
+  response = `CON Security Pin
+  Please Confirm Your Pin`;
   res.send(response);
 };
 
@@ -265,6 +271,10 @@ exports.enterSendAmount = function (req, res, next, user) {
 exports.confirmSendingMoney = function (req, res, next, user) {
   console.log(textArray);
 
+  if (user.phone == textArray[1]) {
+    res.send("END cannot transfer money to yourself");
+  }
+
   let isRegistered = userController.checkIfUserIsRegistered(textArray[1]);
   if (!isRegistered) {
     response = `END The phone number ${textArray[1]}, does not belong to any registerd user of Techkey Cybernetics
@@ -274,8 +284,32 @@ exports.confirmSendingMoney = function (req, res, next, user) {
     2. 0797965680 - Techkey project manger`;
   } else {
     let getRecipient = userController.getUserByPhone(textArray[1]);
-    response = `Are you sure you want to transfer money to ${getRecipient.name}
+    response = `Are you sure you want to transfer ${textArray[2]} KSh to ${getRecipient.name}.
+    1. Yes
+    2. Cancel
     `;
+  }
+
+  res.send(response);
+};
+
+exports.sendMoneyOperation = function (req, res, next, user) {
+  let amountToSend = Number(textArray[2]);
+
+  if (user.balance > amountToSend + transactioncost) {
+    userController.updateAmounts(
+      user,
+      textArray[1],
+      amountToSend + transactioncost,
+      transactioncost
+    );
+
+    userController.updateRecords(user);
+    response = `END successfully transfered ${textArray[2]} KSh. Balance is ${user.balance} KSh.
+    `;
+  } else {
+    response = `END Insufficient balance, cannot send ${textArray[2]} KSh. Current balance is ${user.balance} KSh.
+    Transaction cost is ${transactioncost} KSh. `;
   }
 
   res.send(response);

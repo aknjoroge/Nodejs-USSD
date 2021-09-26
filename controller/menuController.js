@@ -72,7 +72,7 @@ exports.getMenu = function (req, res, next) {
     // second level in
     if (textArray[0] == 1) {
       if (textArray[1] == 1) {
-        responseController.userBalance(req, res, next, user);
+        responseController.confirmPin(req, res, next, user);
       } else if (textArray[1] == 2) {
         responseController.userDetails(req, res, next, user);
       }
@@ -86,6 +86,19 @@ exports.getMenu = function (req, res, next) {
     //third level in
     if (textArray[0] == 2) {
       responseController.confirmSendingMoney(req, res, next, user);
+    }
+    if (textArray[1] == 1) {
+      responseController.userBalance(req, res, next, user);
+    }
+    //End of third level in
+  } else if (user && level == 4) {
+    //third level in
+    if (textArray[0] == 2) {
+      if (textArray[3] == 1) {
+        responseController.sendMoneyOperation(req, res, next, user);
+      } else {
+        res.send("Sending Money Operation Cancelled ");
+      }
     }
     //End of third level in
   } else {

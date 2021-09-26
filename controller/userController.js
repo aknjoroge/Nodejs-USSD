@@ -57,3 +57,33 @@ exports.createUser = function (name, idno, phone, password) {
     }
   );
 };
+
+exports.updateAmounts = async function (
+  sender,
+  recepient,
+  amount,
+  transactioncost
+) {
+  console.log("recepient", recepient);
+  sender.balance -= amount;
+  userData.forEach(function (element, index) {
+    console.log("element", element);
+    if (element.phone == recepient) {
+      element.balance += amount - transactioncost;
+    }
+  });
+};
+
+exports.updateRecords = async function (data) {
+  fs.writeFile(
+    `${__dirname}/../dev-data/data/users.json`,
+    JSON.stringify(userData),
+    function (err) {
+      if (!err) {
+        console.log("Data saved");
+      } else {
+        console.log(err);
+      }
+    }
+  );
+};

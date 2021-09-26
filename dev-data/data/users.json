@@ -20,10 +20,19 @@
   {
     "id": "1632571003868",
     "name": "karanja mj",
-    "balance": 500,
+    "balance": 396,
     "id_no": "909",
     "phone": "+2547106644187",
     "password": "01",
+    "active": true
+  },
+  {
+    "id": "1632571003868",
+    "name": "alexander kn",
+    "balance": 577,
+    "id_no": "908",
+    "phone": "0710664418",
+    "password": "11",
     "active": true
   }
 ]
