@@ -1,6 +1,9 @@
+//*384*8355#
+
 //requiring express node js module
 let express = require("express");
 let mainMenu = require("./routes/mainmenuRoute");
+let message = require("./routes/messageRoute");
 
 //initialize express
 let app = express();
@@ -11,6 +14,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 
 app.use("/api/v1/menu", mainMenu);
+app.use("/api/v1/message", message);
 
 app.get("/", function (req, res) {
   res.json({

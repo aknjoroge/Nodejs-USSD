@@ -23,6 +23,7 @@
   },
   "homepage": "https://github.com/aknjoroge/Nodejs-USSD#readme",
   "dependencies": {
+    "africastalking": "^0.5.4",
     "bcrypt": "^5.0.1",
     "express": "^4.17.1",
     "nodemon": "^2.0.12"

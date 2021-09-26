@@ -1,4 +1,5 @@
 let userController = require("./userController");
+let messageController = require("./messageController");
 
 //=====Global set data
 let phoneNumber;
@@ -268,6 +269,17 @@ exports.userBalance = async function (req, res, next, user) {
   Your Account Balance was KSh ${user.balance} on ${formatedDate}.
   A confirmation SMS has been sent To you.`;
   }
+
+  try {
+    messageController.sendMessage(
+      req,
+      res,
+      next,
+      user,
+      `Your Account Balance was KSh ${user.balance} on ${formatedDate}`
+    );
+  } catch (error) {}
+
   res.send(response);
 };
 exports.confirmPin = function (req, res, next, user) {
