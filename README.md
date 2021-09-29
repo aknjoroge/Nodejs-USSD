@@ -2,4 +2,4 @@
 
 ---
 
-### Not all responces should start with keyword "END" or "CON"
+### Note all responces should start with keyword "END" or "CON"
