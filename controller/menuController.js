@@ -17,6 +17,10 @@ exports.getMenu = function (req, res, next) {
     text = "",
   } = req.body;
 
+  if (phoneNumber.trim().length == 0) {
+    return res.status(400).send("Phone number is required");
+  }
+
   if (phoneNumber.startsWith("07")) {
     let number = phoneNumber.slice(1);
     phoneNumber = `+254${number}`;

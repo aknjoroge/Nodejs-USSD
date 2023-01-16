@@ -10,35 +10,29 @@ module.exports = {
     },
     termsOfService: "https://techkey.co.ke/policies/",
   },
-  host: "localhost:5501",
+  host: "https://africastalking-nodejs-ussd.cyclic.app",
   basePath: "/api/v1",
   securityDefinitions: {},
   schemes: ["http"],
   consumes: ["application/json"],
   produces: ["application/json"],
   paths: {
-    "/auth/oauth/google/signup": {
-      post: {
-        summary: "Signup with google",
-        tags: ["oAuth"],
-        operationId: "Signupwithgoogle",
+    "/api/v1/menu": {
+      get: {
+        summary: "Load USSD Menu",
+        tags: ["Welcome"],
+        operationId: "loadussd",
         deprecated: false,
         produces: ["application/json"],
+
         parameters: [
-          {
-            name: "Authorization",
-            in: "header",
-            required: false,
-            default: "Bearer {token}",
-            type: "string",
-          },
           {
             name: "Body",
             in: "body",
             required: true,
             description: "",
             schema: {
-              $ref: "#/definitions/SignupwithgoogleRequest",
+              $ref: "#/definitions/getMenuBody",
             },
           },
         ],
@@ -46,83 +40,60 @@ module.exports = {
           200: {
             description: "",
             headers: {},
+            schema: {
+              $ref: "#/definitions/getMenuResponse",
+            },
+          },
+        },
+      },
+      post: {
+        summary: "Navigate the USSD Menu",
+
+        tags: ["Register"],
+        operationId: "navigateussd",
+        deprecated: false,
+        produces: ["application/json"],
+
+        parameters: [
+          {
+            name: "Body",
+            in: "body",
+            required: true,
+            description:
+              "To navigate the USSD use a body property called `text`, Text values are divided by a * similar to how a mobile device works after dialing *144#",
+            schema: {
+              $ref: "#/definitions/navigationBody",
+            },
+          },
+        ],
+        responses: {
+          200: {
+            description: "",
+            headers: {},
+            schema: {
+              $ref: "#/definitions/navigationesponse",
+            },
           },
         },
       },
     },
-
-    "/file/public": {
-      get: {
-        summary: "get all",
-        tags: ["files public"],
-        operationId: "Getgetall3",
-        deprecated: false,
-        produces: ["application/json"],
-        parameters: [
-          {
-            name: "Authorization",
-            in: "header",
-            required: false,
-            default: "Bearer {token}",
-            type: "string",
-          },
-          {
-            name: "client_id",
-            in: "header",
-            required: true,
-            type: "string",
-            description: "",
-          },
-          {
-            name: "Origin",
-            in: "header",
-            required: true,
-            type: "string",
-            description: "",
-          },
-        ],
-        responses: {
-          200: {
-            description: "",
-            headers: {},
-          },
-        },
-      },
+    "/api/v1/account": {
       post: {
-        summary: "create public file",
-        tags: ["files public"],
-        operationId: "createpublicfile",
+        summary: "My Account USSD Menu",
+
+        tags: ["My Account"],
+        operationId: "navigateussd",
         deprecated: false,
         produces: ["application/json"],
+
         parameters: [
-          {
-            name: "Authorization",
-            in: "header",
-            required: false,
-            default: "Bearer {token}",
-            type: "string",
-          },
-          {
-            name: "client_id",
-            in: "header",
-            required: true,
-            type: "string",
-            description: "",
-          },
-          {
-            name: "Origin",
-            in: "header",
-            required: true,
-            type: "string",
-            description: "",
-          },
           {
             name: "Body",
             in: "body",
             required: true,
-            description: "",
+            description: "Main menu presented only to registered users",
             schema: {
-              $ref: "#/definitions/createpublicfilerequest",
+              $ref: "#/definitions/myaccountBody",
             },
           },
         ],
@@ -130,30 +101,84 @@ module.exports = {
           200: {
             description: "",
             headers: {},
+            schema: {
+              $ref: "#/definitions/myaccountresponse",
+            },
           },
         },
       },
     },
   },
   definitions: {
-    SignupwithgoogleRequest: {
-      title: "SignupwithgoogleRequest",
+    getMenuBody: {
+      title: "getMenuBody",
       example: {
-        token: "token",
+        phoneNumber: "070000000",
       },
       type: "object",
       properties: {
-        token: {
+        phoneNumber: {
           type: "string",
         },
       },
       required: ["token"],
     },
+    getMenuResponse: {
+      title: "getMenuResponse",
+      example: `CON TechKey Cybernetics USSD Service. Please register to continue 1. Register 2. Exit TechKey Cybernetics`,
+      type: "object",
+      properties: {},
+    },
+    navigationBody: {
+      title: "navigationBody",
+      example: {
+        phoneNumber: "070000000",
+        text: "1*1*Alexander",
+      },
+      type: "object",
+      properties: {
+        phoneNumber: {
+          type: "string",
+        },
+        text: {
+          type: "string",
+        },
+      },
+      required: ["token"],
+    },
+    navigationesponse: {
+      title: "navigationesponse",
+      example: `CON Enter your Id number`,
+      type: "object",
+      properties: {},
+    },
+    myaccountBody: {
+      title: "myaccountBody",
+      example: {
+        phoneNumber: "070000000",
+      },
+      type: "object",
+      properties: {
+        phoneNumber: {
+          type: "string",
+        },
+        text: {
+          type: "string",
+        },
+      },
+      required: ["token"],
+    },
+    myaccountresponse: {
+      title: "myaccountresponse",
+      example: `CON Hallo Alex. Welcome To Techkey Cybernetics USSD Application Select A Service Below 1. My Account 2. Send money 3. My Projects 4. Development Services 5. Client Assistance TechKey Cybernetics`,
+      type: "object",
+      properties: {},
+    },
   },
   security: [],
   tags: [
     {
-      name: "oAuth",
+      // name: "Navigation",
     },
   ],
 };

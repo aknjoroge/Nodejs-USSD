@@ -15,10 +15,11 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 
 app.use("/api/v1/menu", mainMenu);
+app.use("/api/v1/account", mainMenu);
 app.use("/api/v1/message", message);
 
 //Swagger Docs
-app.use("/v1", swaggerUi.serve, swaggerUi.setup(swaggerDocument)); // TODO develop swagger docs
+app.use("/", swaggerUi.serve, swaggerUi.setup(swaggerDocument)); // TODO develop swagger docs
 
 // app.get("/", function (req, res) {
 //   res.json({
