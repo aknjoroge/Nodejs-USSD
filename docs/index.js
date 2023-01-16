@@ -11,7 +11,7 @@ module.exports = {
     termsOfService: "https://techkey.co.ke/policies/",
   },
   host: "https://africastalking-nodejs-ussd.cyclic.app",
-  basePath: "/api/v1",
+  basePath: "/",
   securityDefinitions: {},
   schemes: ["http"],
   consumes: ["application/json"],
