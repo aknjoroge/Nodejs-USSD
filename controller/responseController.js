@@ -20,7 +20,7 @@ exports.resgisterScreen = async function (req, res, next) {
   response = `CON TechKey Cybernetics USSD Service \n Please register to continue  
     1. Register
     2. Exit
-    &copy; TechKey Cybernetics`;
+     TechKey Cybernetics`;
   res.send(response);
 };
 exports.resgisterScreenStage1 = function (req, res, next) {
@@ -198,7 +198,7 @@ exports.welcomeScreen = function (req, res, next, user) {
    3. My Projects
    4. Development Services
    5. Client Assistance
-   &copy; TechKey Cybernetics
+   TechKey Cybernetics
     `;
   res.send(response);
 };

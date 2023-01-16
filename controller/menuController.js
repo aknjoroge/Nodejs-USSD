@@ -10,7 +10,12 @@ exports.getMenu = function (req, res, next) {
   let user;
   //================== data from Africastalking
 
-  let { sessionId, serviceCode, phoneNumber, text } = req.body;
+  let {
+    sessionId = "",
+    serviceCode = "",
+    phoneNumber = "",
+    text = "",
+  } = req.body;
 
   if (phoneNumber.startsWith("07")) {
     let number = phoneNumber.slice(1);
@@ -21,8 +26,6 @@ exports.getMenu = function (req, res, next) {
     textArray = text.split("*");
     level = textArray.length;
   }
-
-  console.log(phoneNumber);
 
   //====Passing Global Data
   userController.globalData(phoneNumber);
