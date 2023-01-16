@@ -49,7 +49,7 @@ module.exports = {
       post: {
         summary: "Navigate the USSD Menu",
 
-        tags: ["Register"],
+        tags: ["Navigate"],
         operationId: "navigateussd",
         deprecated: false,
         produces: ["application/json"],
@@ -103,6 +103,38 @@ module.exports = {
             headers: {},
             schema: {
               $ref: "#/definitions/myaccountresponse",
+            },
+          },
+        },
+      },
+    },
+    "/api/v1/message": {
+      post: {
+        summary: "Send a Premium Branded SMS to a client",
+
+        tags: ["Message"],
+        operationId: "messageUssd",
+        deprecated: false,
+        produces: ["application/json"],
+
+        parameters: [
+          {
+            name: "Body",
+            in: "body",
+            required: true,
+            description:
+              "To test the service, use africastalking Simulator to login with the phone number. https://developers.africastalking.com/simulator",
+            schema: {
+              $ref: "#/definitions/messageBody",
+            },
+          },
+        ],
+        responses: {
+          200: {
+            description: "",
+            headers: {},
+            schema: {
+              $ref: "#/definitions/messageresponse",
             },
           },
         },
@@ -162,9 +194,6 @@ module.exports = {
         phoneNumber: {
           type: "string",
         },
-        text: {
-          type: "string",
-        },
       },
       required: ["token"],
     },
@@ -174,11 +203,30 @@ module.exports = {
       type: "object",
       properties: {},
     },
+    messageBody: {
+      title: "myaccountBody",
+      example: {
+        phone: "+25470000000",
+        message: "Welcome to Techkey",
+      },
+      type: "object",
+      properties: {
+        phone: {
+          type: "string",
+        },
+        message: {
+          type: "string",
+        },
+      },
+      required: ["token"],
+    },
+    messageresponse: {
+      title: "myaccountresponse",
+      example: `END Messsage Sent`,
+      type: "object",
+      properties: {},
+    },
   },
   security: [],
-  tags: [
-    {
-      // name: "Navigation",
-    },
-  ],
+  tags: [],
 };

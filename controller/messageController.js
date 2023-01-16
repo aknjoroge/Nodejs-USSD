@@ -10,7 +10,7 @@ exports.sendMessage = function (req, res, next) {
 
   let { user = {}, message = "" } = req.body;
   // Use the service
-   const options = {
+  const options = {
     to: [`${user.phone}`],
     message,
     from: "Techkey",
@@ -30,5 +30,5 @@ exports.sendMessage = function (req, res, next) {
 };
 
 exports.closeResponse = function (req, res, next) {
-  res.send("Response END");
+  res.send("END Messsage Sent");
 };
